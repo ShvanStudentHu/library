@@ -3,8 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Library</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body></body>
+  <body>
+    <div class="main">
+      <h1>My Library</h1>
+      <button class="add-book" onclick="books()">Add New Book</button>
+      <form action="" method="post" id="form">
+        <div class="form">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="aname" />
+        </div>
+        <div class="form">
+          <label for="author">Author:</label>
+          <input type="text" id="author" name="auth" />
+        </div>
+        <div class="form">
+          <label for="pages">Pages:</label>
+          <input type="text" id="pages" name="bookpages" />
+        </div>
+        <div class="form checkbox">
+          <label for="checkbox">Have you read the book?</label>
+          <input type="checkbox" id="checkbox" name="read" value="true" />
+        </div>
+        <button id="btn" type="submit">Add</button>
+      </form>
+      <div class="card"></div>
+      <div class="card">item</div>
+    </div>
+  </body>
   <script src="javascript.js"></script>
 </html>

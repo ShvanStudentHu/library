@@ -1,10 +1,18 @@
 const newDiv = document.createElement("div");
 document.body.append(newDiv);
 
+const addGlobalEventListner = (type, selector, callback) => {
+  document.addEventListener(type, (e) => {
+    if (e.target.matches(selector)) callback(e);
+  });
+};
+
 const bookCard = () => {
   const divCard = newDiv.cloneNode(true);
   document.body.append(divCard);
-  const text = document.createTextNode("hi");
+
+  divCard.setAttribute("class", "card");
+  const text = document.createTextNode("item");
   divCard.append(text);
 };
 
@@ -31,9 +39,7 @@ this.askInfo = function (type) {
 };
 
 const books = () => {
-  mylibrary.forEach((object) => {
-    bookCard();
-  });
+  document.getElementById("form").setAttribute("style", "display:grid;");
 };
 
 const removeBook = (bookName) => {
@@ -56,3 +62,16 @@ Book.prototype.displayInfo = function () {
 
 // const holdMeTight = new Book("Houd me vast", "sue Johansson", "200", true);
 // mylibrary.push(holdMeTight);
+
+document.getElementById("form").addEventListener("submit", function (event) {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const [bookName, author, pages, read] = [
+    "aname",
+    "auth",
+    "bookpages",
+    "read",
+  ].map((key) => formData.get(key));
+
+  console.log(bookName, author, pages, read);
+});

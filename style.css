@@ -1,12 +1,78 @@
 html {
-  height: 100%;
+  height: 100vw;
+  /* width: 100vh; */
   margin: 0;
+  box-sizing: border-box;
 }
 
 body {
   display: grid;
+  background-color: whitesmoke;
 }
 
-div {
+/* div {
   border: 1px solid burlywood;
+} */
+
+.main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+.card {
+  display: grid;
+  grid-template-columns: 50px 5px;
+  grid-template-rows: 50px 50px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  width: 250px;
+  grid-auto-rows: 50px;
+  justify-self: center;
+}
+
+.add-book {
+  background-color: lightblue;
+  height: 32px;
+}
+
+form {
+  display: none;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  padding: 30px;
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 22vw;
+}
+
+.form {
+  background-color: white;
+  display: grid;
+  width: clamp(10vh, 500px, 500px);
+  font-size: 1rem;
+  margin: 10px;
+}
+
+input {
+  font-size: 1rem;
+  padding: 12px;
+}
+
+label {
+  margin-bottom: 8px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+}
+
+#checkbox {
+  width: 10px;
+  height: 10px;
 }
