@@ -1,6 +1,5 @@
-const newDiv = document.createElement("div");
 const main = document.querySelector(".main");
-document.body.append(newDiv);
+// document.body.append(newDiv);
 
 const addGlobalEventListner = (type, selector, callback) => {
   document.addEventListener(type, (e) => {
@@ -17,6 +16,11 @@ addGlobalEventListner("click", ".add-book", (e) => {
   books();
 });
 
+addGlobalEventListner("click", ".delete", (e) => {
+  removeBook(e.target.value);
+  console.log(e.target);
+});
+
 // let book = {
 //   bookName: bookName,
 //   author: author,
@@ -24,34 +28,52 @@ addGlobalEventListner("click", ".add-book", (e) => {
 //   read: read,
 // };
 
-const bookCard = (book) => {
-  console.log(book);
+const createEmptyDiv = () => {
+  const newDiv = document.createElement("div");
+  main.append(newDiv);
+  newDiv.setAttribute("class", "card");
+
+  return newDiv;
+};
+
+const createDeleteButton = (newDiv, bookName) => {
   const newButton = document.createElement("button");
-
-  const divCard = newDiv.cloneNode(true);
   const insertButton = newButton.cloneNode(true);
-
-  const n = "Name:";
-  const a = "Author";
-  const p = "Pages";
-
-  const att = [n, a, p];
-  const bookInfo = [name, author, pages];
-  // const insertParagraph = newParagraph.cloneNode(true);
-  main.append(divCard);
-  divCard.append(insertButton);
-  insertButton.textContent = "x";
-  divCard.setAttribute("class", "card");
+  newDiv.append(insertButton);
   insertButton.setAttribute("class", "delete");
+  insertButton.value = bookName;
+  insertButton.textContent = "x";
+
+  return insertButton;
+};
+
+const insertBookInfo = (book, newDiv) => {
+  const attributes = ["Name:", "Author:", "Pages:"];
+  const bookInfo = [book.name, book.author, book.pages, book.read];
 
   for (let i = 0; i < 3; i++) {
     const insertParagraph = document.createElement("p");
-    insertParagraph.textContent = `${att[i]} ${bookInfo[i]}`;
-    divCard.append(insertParagraph);
+    insertParagraph.textContent = `${attributes[i]} ${bookInfo[i]}`;
+    newDiv.append(insertParagraph);
   }
-  newButton.textContent = "READ";
-  divCard.append(newButton);
+};
+
+const createReadButton = (readStatus, newDiv) => {
+  const newButton = document.createElement("button");
+  if (!readStatus) {
+    newButton.textContent = "unread";
+  } else {
+    newButton.textContent = "read";
+  }
+  newDiv.append(newButton);
   newButton.setAttribute("class", "toggle-read");
+};
+
+const bookCard = (book) => {
+  const newDiv = createEmptyDiv();
+  createDeleteButton(newDiv, book.name);
+  insertBookInfo(book, newDiv);
+  createReadButton(book.read, newDiv);
 };
 
 const mylibrary = [];
@@ -64,7 +86,7 @@ function Book(name, author, pages, read) {
   this.read = read;
 }
 const addBookToLibrary = (name, author, pages, read) => {
-  if (String(read).toLocaleLowerCase === "true") {
+  if (read === "true") {
     read = true;
   } else {
     read = false;
