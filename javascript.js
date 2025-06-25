@@ -1,4 +1,5 @@
 const newDiv = document.createElement("div");
+const main = document.querySelector(".main");
 document.body.append(newDiv);
 
 const addGlobalEventListner = (type, selector, callback) => {
@@ -7,31 +8,75 @@ const addGlobalEventListner = (type, selector, callback) => {
   });
 };
 
-const bookCard = () => {
-  const divCard = newDiv.cloneNode(true);
-  document.body.append(divCard);
+addGlobalEventListner("click", "#btn", (e) => {
+  document.getElementById("form").setAttribute("style", "display:none;");
+  console.log("FIRE", e.target);
+});
 
+addGlobalEventListner("click", ".add-book", (e) => {
+  books();
+});
+
+// let book = {
+//   bookName: bookName,
+//   author: author,
+//   pages: pages,
+//   read: read,
+// };
+
+const bookCard = (book) => {
+  console.log(book);
+  const newButton = document.createElement("button");
+
+  const divCard = newDiv.cloneNode(true);
+  const insertButton = newButton.cloneNode(true);
+
+  const n = "Name:";
+  const a = "Author";
+  const p = "Pages";
+
+  const att = [n, a, p];
+  const bookInfo = [name, author, pages];
+  // const insertParagraph = newParagraph.cloneNode(true);
+  main.append(divCard);
+  divCard.append(insertButton);
+  insertButton.textContent = "x";
   divCard.setAttribute("class", "card");
-  const text = document.createTextNode("item");
-  divCard.append(text);
+  insertButton.setAttribute("class", "delete");
+
+  for (let i = 0; i < 3; i++) {
+    const insertParagraph = document.createElement("p");
+    insertParagraph.textContent = `${att[i]} ${bookInfo[i]}`;
+    divCard.append(insertParagraph);
+  }
+  newButton.textContent = "READ";
+  divCard.append(newButton);
+  newButton.setAttribute("class", "toggle-read");
 };
 
 const mylibrary = [];
 
 function Book(name, author, pages, read) {
+  this.uuid = crypto.randomUUID();
   this.name = name;
   this.author = author;
   this.pages = pages;
   this.read = read;
 }
 const addBookToLibrary = (name, author, pages, read) => {
+  if (String(read).toLocaleLowerCase === "true") {
+    read = true;
+  } else {
+    read = false;
+  }
   const bookName = new Book(name, author, pages, read);
+  bookCard(bookName);
   mylibrary.push(bookName);
 };
 
-addBookToLibrary("Gehectheid in Psychotherapie", "David J. Wallin", 255, true);
-addBookToLibrary("Shvan is Awsome", "Shvan Yakana", 1023, true);
-addBookToLibrary("f*ck I", "D.M", 1, false);
+// addBookToLibrary("Gehectheid in Psychotherapie", "David J. Wallin", 255, true);
+// addBookToLibrary("Shvan is Awsome", "Shvan Yakana", 1023, true);
+// addBookToLibrary("f*ck I", "D.M", 1, false);
 
 this.askInfo = function (type) {
   const bookInfo = this.type;
@@ -73,5 +118,5 @@ document.getElementById("form").addEventListener("submit", function (event) {
     "read",
   ].map((key) => formData.get(key));
 
-  console.log(bookName, author, pages, read);
+  addBookToLibrary(bookName, author, pages, read);
 });

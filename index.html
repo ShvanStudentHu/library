@@ -9,7 +9,7 @@
   <body>
     <div class="main">
       <h1>My Library</h1>
-      <button class="add-book" onclick="books()">Add New Book</button>
+      <button class="add-book">Add New Book</button>
       <form action="" method="post" id="form">
         <div class="form">
           <label for="name">Name:</label>
@@ -29,8 +29,13 @@
         </div>
         <button id="btn" type="submit">Add</button>
       </form>
-      <div class="card"></div>
-      <div class="card">item</div>
+      <div class="card">
+        <button class="delete">X</button>
+        <p>Name: RED DEAD REDEMPTION 2</p>
+        <p>Author: ROCKSTAR GAMES</p>
+        <p>Hours: 100+</p>
+        <button class="toggle-read">read</button>
+      </div>
     </div>
   </body>
   <script src="javascript.js"></script>
