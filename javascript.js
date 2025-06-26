@@ -25,20 +25,18 @@ addGlobalEventListner("click", ".delete", (e) => {
 //   read: read,
 // };
 
-const createElement = (element) => {
-  const newElement = document.createElement(element);
-  return newElement;
-};
+const createElement = (tag) => document.createElement(tag);
 
 const addStylingClass = (target, classToAdd) => {
   target.classList.add(classToAdd);
 };
+const insertToParent = (child, parent) => parent.appendChild(child);
 
-const insertToParent = (child, parent) => {
-  parent.appendChild(child);
-};
+const setHtmlAttribute = (parent, atrribute, value) =>
+  parent.setAttribute(atrribute, value);
 
 const createDeleteButton = (newDiv) => {
+  //refactor this to add data-uuid for deletion later
   const newButton = createElement("button");
 
   insertToParent(newButton, newDiv);
@@ -53,6 +51,7 @@ const insertText = (target, text) => {
 };
 
 const insertBookInfo = (book, newDiv) => {
+  // future upgrade: capatilize labels dynamically, or make them localizable
   const fields = [
     { label: "Name", value: book.name },
     { label: "Author", value: book.author },
@@ -68,19 +67,16 @@ const insertBookInfo = (book, newDiv) => {
 
 const createReadButton = (readStatus, newDiv) => {
   const newButton = createElement("button");
-  if (!readStatus) {
-    newButton.textContent = "unread";
-  } else {
-    newButton.textContent = "read";
-  }
+  insertText(newButton, readStatus ? "read" : "unread");
   insertToParent(newButton, newDiv);
 
   addStylingClass(newButton, "toggle-read");
 };
 
 const bookCard = (book, container) => {
+  //store book.uuid in data-*
   const newDiv = createElement("div");
-
+  setHtmlAttribute(newDiv, "data", book.uuid);
   insertToParent(newDiv, container);
   addStylingClass(newDiv, "card");
   createDeleteButton(newDiv, book.name);
@@ -99,12 +95,8 @@ function Book(name, author, pages, read) {
 }
 const addBookToLibrary = (name, author, pages, read) => {
   const main = document.querySelector(".main");
-
-  if (read === "true") {
-    read = true;
-  } else {
-    read = false;
-  }
+  //future upgrade: valdating imputs
+  read = read === "true";
   const bookName = new Book(name, author, pages, read);
   bookCard(bookName, main);
   mylibrary.push(bookName);
