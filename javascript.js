@@ -91,7 +91,7 @@ function Book(name, author, pages, read) {
   this.read = read;
 }
 const addBookToLibrary = (name, author, pages, read) => {
-  const main = document.querySelector(".main");
+  const main = document.querySelector(".grid-div");
   //future upgrade: valdating imputs
   read = read === "true";
   const bookName = new Book(name, author, pages, read);
@@ -108,9 +108,9 @@ const books = () => {
   catchElement("#form").setAttribute("style", "display:grid;");
 };
 
-const removeBook = (bookName) => {
+const removeBook = (bookuuid) => {
   mylibrary.forEach((object) => {
-    if (bookName === object.uuid) {
+    if (bookuuid === object.uuid) {
       mylibrary.splice(mylibrary.indexOf(object), 1);
     }
   });

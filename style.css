@@ -1,3 +1,13 @@
+:root {
+  --normal-blue: #2196f3;
+  --focused-blue: #1976d2;
+  --pressed-blue: #1e88e5;
+
+  --edu-font: "Edu VIC WA NT Hand", cursive;
+  --edu-weight: 500;
+  --edu-style: normal;
+}
+
 html {
   height: 100vw;
   /* width: 100vh; */
@@ -20,25 +30,42 @@ body {
   flex-direction: column;
   gap: 10px;
 }
+
+.grid-div {
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  gap: 2em;
+  grid-auto-rows: 1fr;
+  margin-left: 1em;
+  margin-right: 1em;
+
+  @media screen and (max-width: 700px) {
+    grid-template: 1fr / 1fr;
+  }
+}
 .card {
   display: flex;
   flex-direction: column;
   padding: 10px;
   overflow: hidden;
+  border-radius: 0.4em;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-  width: max(30%, 200px);
-  grid-auto-rows: 50px;
-  justify-self: center;
+  width: max(100%, 150px);
 }
 
 .card p {
   font-size: clamp(0.8rem, 4vh);
+  font-family: var(--edu-font);
+  font-weight: var(--edu-weight);
+  font-style: var(--edu-style);
 }
 
 .add-book {
-  background-color: lightblue;
+  background-color: var(--normal-blue);
+  border-radius: 0.3em;
+  color: white;
   height: 32px;
 }
 
