@@ -38,42 +38,50 @@ const insertToParent = (child, parent) => {
   parent.appendChild(child);
 };
 
-const createDeleteButton = (newDiv, bookName) => {
+const createDeleteButton = (newDiv) => {
   const newButton = createElement("button");
-  newDiv.append(newButton);
-  newButton.setAttribute("class", "delete");
-  newButton.value = bookName;
-  newButton.textContent = "x";
+
+  insertToParent(newButton, newDiv);
+  addStylingClass(newButton, "delete");
+  insertText(newButton, "x");
 
   return newButton;
 };
 
-const insertBookInfo = (book, newDiv) => {
-  const attributes = ["Name:", "Author:", "Pages:"];
-  const bookInfo = [book.name, book.author, book.pages, book.read];
+const insertText = (target, text) => {
+  target.textContent = text;
+};
 
-  for (let i = 0; i < 3; i++) {
-    const insertParagraph = document.createElement("p");
-    insertParagraph.textContent = `${attributes[i]} ${bookInfo[i]}`;
-    newDiv.append(insertParagraph);
-  }
+const insertBookInfo = (book, newDiv) => {
+  const fields = [
+    { label: "Name", value: book.name },
+    { label: "Author", value: book.author },
+    { label: "Pages", value: book.pages },
+  ];
+
+  fields.forEach((field) => {
+    const paragraph = createElement("p");
+    paragraph.textContent = `${field.label} ${field.value}`;
+    insertToParent(paragraph, newDiv);
+  });
 };
 
 const createReadButton = (readStatus, newDiv) => {
-  const newButton = document.createElement("button");
+  const newButton = createElement("button");
   if (!readStatus) {
     newButton.textContent = "unread";
   } else {
     newButton.textContent = "read";
   }
-  newDiv.append(newButton);
-  newButton.setAttribute("class", "toggle-read");
+  insertToParent(newButton, newDiv);
+
+  addStylingClass(newButton, "toggle-read");
 };
 
-const bookCard = (book) => {
-  const main = document.querySelector(".main");
+const bookCard = (book, container) => {
   const newDiv = createElement("div");
-  insertToParent(newDiv, main);
+
+  insertToParent(newDiv, container);
   addStylingClass(newDiv, "card");
   createDeleteButton(newDiv, book.name);
   insertBookInfo(book, newDiv);
@@ -90,13 +98,15 @@ function Book(name, author, pages, read) {
   this.read = read;
 }
 const addBookToLibrary = (name, author, pages, read) => {
+  const main = document.querySelector(".main");
+
   if (read === "true") {
     read = true;
   } else {
     read = false;
   }
   const bookName = new Book(name, author, pages, read);
-  bookCard(bookName);
+  bookCard(bookName, main);
   mylibrary.push(bookName);
 };
 
