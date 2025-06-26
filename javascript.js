@@ -14,16 +14,14 @@ addGlobalEventListner("click", ".add-book", (e) => {
 });
 
 addGlobalEventListner("click", ".delete", (e) => {
-  removeBook(e.target.value);
-  console.log(e.target);
+  const buttonPress = e.target;
+  const closestDiv = buttonPress.closest("div");
+  const uuid = closestDiv.getAttribute("data");
+  removeBook(uuid);
+  closestDiv.remove();
 });
 
-// let book = {
-//   bookName: bookName,
-//   author: author,
-//   pages: pages,
-//   read: read,
-// };
+const catchElement = (element) => document.body.querySelector(element);
 
 const createElement = (tag) => document.createElement(tag);
 
@@ -53,9 +51,9 @@ const insertText = (target, text) => {
 const insertBookInfo = (book, newDiv) => {
   // future upgrade: capatilize labels dynamically, or make them localizable
   const fields = [
-    { label: "Name", value: book.name },
-    { label: "Author", value: book.author },
-    { label: "Pages", value: book.pages },
+    { label: "Name:", value: book.name },
+    { label: "Author:", value: book.author },
+    { label: "Pages:", value: book.pages },
   ];
 
   fields.forEach((field) => {
@@ -74,7 +72,6 @@ const createReadButton = (readStatus, newDiv) => {
 };
 
 const bookCard = (book, container) => {
-  //store book.uuid in data-*
   const newDiv = createElement("div");
   setHtmlAttribute(newDiv, "data", book.uuid);
   insertToParent(newDiv, container);
@@ -102,39 +99,27 @@ const addBookToLibrary = (name, author, pages, read) => {
   mylibrary.push(bookName);
 };
 
-// addBookToLibrary("Gehectheid in Psychotherapie", "David J. Wallin", 255, true);
-// addBookToLibrary("Shvan is Awsome", "Shvan Yakana", 1023, true);
-// addBookToLibrary("f*ck I", "D.M", 1, false);
-
 this.askInfo = function (type) {
   const bookInfo = this.type;
   return bookInfo;
 };
 
 const books = () => {
-  document.getElementById("form").setAttribute("style", "display:grid;");
+  catchElement("#form").setAttribute("style", "display:grid;");
 };
 
 const removeBook = (bookName) => {
   mylibrary.forEach((object) => {
-    if (bookName === object.name) {
+    if (bookName === object.uuid) {
       mylibrary.splice(mylibrary.indexOf(object), 1);
     }
   });
 };
 
-//   this.displayInfo = function () {
-//     const info = `${this.name}, ${this.author}, ${this.pages}, ${this.read}`;
-//     return info;
-//   };
-
 Book.prototype.displayInfo = function () {
   const info = `${this.name}, ${this.author}, ${this.pages}, ${this.read}`;
   return info;
 };
-
-// const holdMeTight = new Book("Houd me vast", "sue Johansson", "200", true);
-// mylibrary.push(holdMeTight);
 
 document.getElementById("form").addEventListener("submit", function (event) {
   event.preventDefault();
