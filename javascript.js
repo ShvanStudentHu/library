@@ -1,6 +1,3 @@
-const main = document.querySelector(".main");
-// document.body.append(newDiv);
-
 const addGlobalEventListner = (type, selector, callback) => {
   document.addEventListener(type, (e) => {
     if (e.target.matches(selector)) callback(e);
@@ -28,23 +25,27 @@ addGlobalEventListner("click", ".delete", (e) => {
 //   read: read,
 // };
 
-const createEmptyDiv = () => {
-  const newDiv = document.createElement("div");
-  main.append(newDiv);
-  newDiv.setAttribute("class", "card");
+const createElement = (element) => {
+  const newElement = document.createElement(element);
+  return newElement;
+};
 
-  return newDiv;
+const addStylingClass = (target, classToAdd) => {
+  target.classList.add(classToAdd);
+};
+
+const insertToParent = (child, parent) => {
+  parent.appendChild(child);
 };
 
 const createDeleteButton = (newDiv, bookName) => {
-  const newButton = document.createElement("button");
-  const insertButton = newButton.cloneNode(true);
-  newDiv.append(insertButton);
-  insertButton.setAttribute("class", "delete");
-  insertButton.value = bookName;
-  insertButton.textContent = "x";
+  const newButton = createElement("button");
+  newDiv.append(newButton);
+  newButton.setAttribute("class", "delete");
+  newButton.value = bookName;
+  newButton.textContent = "x";
 
-  return insertButton;
+  return newButton;
 };
 
 const insertBookInfo = (book, newDiv) => {
@@ -70,7 +71,10 @@ const createReadButton = (readStatus, newDiv) => {
 };
 
 const bookCard = (book) => {
-  const newDiv = createEmptyDiv();
+  const main = document.querySelector(".main");
+  const newDiv = createElement("div");
+  insertToParent(newDiv, main);
+  addStylingClass(newDiv, "card");
   createDeleteButton(newDiv, book.name);
   insertBookInfo(book, newDiv);
   createReadButton(book.read, newDiv);
